@@ -135,7 +135,7 @@ namespace eosio { namespace ship_protocol {
       bool                        fetch_finality_data    = {};
    };
 
-   EOSIO_REFLECT(get_blocks_request_v1, base get_blocks_request_v1, fetch_finality_data)
+   EOSIO_REFLECT(get_blocks_request_v1, base get_blocks_request_v0, fetch_finality_data)
 
    struct get_blocks_ack_request_v0 {
       uint32_t num_messages = {};
