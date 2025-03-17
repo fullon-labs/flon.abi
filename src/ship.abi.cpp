@@ -165,6 +165,15 @@ extern const char* const state_history_plugin_abi = R"({
             ]
         },
         {
+            "name": "transaction_res_usage_v0", "fields": [
+                { "name": "payer", "type": "name" },
+                { "name": "net_usage", "type": "uint64" },
+                { "name": "net_gas", "type": "uint64" },
+                { "name": "cpu_usage", "type": "uint64" },
+                { "name": "cpu_gas", "type": "uint64" }
+            ]
+        },
+        {
             "name": "partial_transaction_v0", "fields": [
                 { "name": "expiration", "type": "time_point_sec" },
                 { "name": "ref_block_num", "type": "uint16" },
@@ -184,7 +193,7 @@ extern const char* const state_history_plugin_abi = R"({
                 { "name": "cpu_usage_us", "type": "uint32" },
                 { "name": "net_usage_words", "type": "varuint32" },
                 { "name": "elapsed", "type": "int64" },
-                { "name": "net_usage", "type": "uint64" },
+                { "name": "trx_res_usage", "type": "transaction_res_usage_v0" },
                 { "name": "scheduled", "type": "bool" },
                 { "name": "action_traces", "type": "action_trace[]" },
                 { "name": "account_ram_delta", "type": "account_delta?" },
@@ -405,7 +414,10 @@ extern const char* const state_history_plugin_abi = R"({
                 { "type": "uint32", "name": "max_transaction_delay" },
                 { "type": "uint32", "name": "max_inline_action_size" },
                 { "type": "uint16", "name": "max_inline_action_depth" },
-                { "type": "uint16", "name": "max_authority_depth" }
+                { "type": "uint16", "name": "max_authority_depth" },
+                { "type": "uint32", "name": "gas_per_cpu_ms" },
+                { "type": "uint32", "name": "gas_per_net_kb" },
+                { "type": "uint32", "name": "gas_per_ram_kb" }
             ]
         },
         {
@@ -427,6 +439,9 @@ extern const char* const state_history_plugin_abi = R"({
                 { "type": "uint32", "name": "max_inline_action_size" },
                 { "type": "uint16", "name": "max_inline_action_depth" },
                 { "type": "uint16", "name": "max_authority_depth" },
+                { "type": "uint32", "name": "gas_per_cpu_ms" },
+                { "type": "uint32", "name": "gas_per_net_kb" },
+                { "type": "uint32", "name": "gas_per_ram_kb" },
                 { "type": "uint32", "name": "max_action_return_value_size" }
             ]
         },
@@ -535,7 +550,9 @@ extern const char* const state_history_plugin_abi = R"({
                 { "type": "name", "name": "owner" },
                 { "type": "int64", "name": "net_weight" },
                 { "type": "int64", "name": "cpu_weight" },
-                { "type": "int64", "name": "ram_bytes" }
+                { "type": "int64", "name": "ram_bytes" },
+                { "type": "uint64", "name": "gas" },
+                { "type": "bool", "name": "is_unlimited" }
             ]
         },
         {
@@ -585,7 +602,10 @@ extern const char* const state_history_plugin_abi = R"({
                 { "type": "elastic_limit_parameters", "name": "cpu_limit_parameters" },
                 { "type": "elastic_limit_parameters", "name": "net_limit_parameters" },
                 { "type": "uint32", "name": "account_cpu_usage_average_window" },
-                { "type": "uint32", "name": "account_net_usage_average_window" }
+                { "type": "uint32", "name": "account_net_usage_average_window" },
+                { "type": "uint32", "name": "gas_per_cpu_ms" },
+                { "type": "uint32", "name": "gas_per_net_kb" },
+                { "type": "uint32", "name": "gas_per_ram_kb" }
             ]
         },
         {
@@ -683,6 +703,7 @@ extern const char* const state_history_plugin_abi = R"({
 
         { "name": "action_receipt", "types": ["action_receipt_v0"] },
         { "name": "action_trace", "types": ["action_trace_v0", "action_trace_v1"] },
+        { "name": "transaction_res_usage", "types": ["transaction_res_usage_v0"] },
         { "name": "partial_transaction", "types": ["partial_transaction_v0"] },
         { "name": "transaction_trace", "types": ["transaction_trace_v0"] },
         { "name": "transaction_variant", "types": ["transaction_id", "packed_transaction"] },
