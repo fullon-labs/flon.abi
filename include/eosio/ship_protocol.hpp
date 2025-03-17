@@ -268,6 +268,18 @@ namespace eosio { namespace ship_protocol {
 
    using action_trace = std::variant<action_trace_v0, action_trace_v1>;
 
+   struct transaction_res_usage_v0 {
+      eosio::name                   payer       = {};
+      uint64_t                      net_usage   = {};
+      uint64_t                      net_gas     = {};
+      uint64_t                      cpu_usage   = {};
+      uint64_t                      cpu_gas     = {};
+   };
+
+   EOSIO_REFLECT(transaction_res_usage_v0, payer, net_usage, net_gas, cpu_usage, cpu_gas)
+
+   using transaction_res_usage = std::variant<transaction_res_usage_v0>;
+
    struct partial_transaction_v0 {
       eosio::time_point_sec            expiration             = {};
       uint16_t                         ref_block_num          = {};
@@ -293,7 +305,7 @@ namespace eosio { namespace ship_protocol {
       uint32_t                               cpu_usage_us      = {};
       eosio::varuint32                       net_usage_words   = {};
       int64_t                                elapsed           = {};
-      uint64_t                               net_usage         = {};
+      transaction_res_usage                  res_usage         = {};
       bool                                   scheduled         = {};
       std::vector<action_trace>              action_traces     = {};
       std::optional<account_delta>           account_ram_delta = {};
@@ -307,7 +319,7 @@ namespace eosio { namespace ship_protocol {
       std::optional<partial_transaction>     partial           = {};
    };
 
-   EOSIO_REFLECT(transaction_trace_v0, id, status, cpu_usage_us, net_usage_words, elapsed, net_usage, scheduled,
+   EOSIO_REFLECT(transaction_trace_v0, id, status, cpu_usage_us, net_usage_words, elapsed, res_usage, scheduled,
                  action_traces, account_ram_delta, except, error_code, failed_dtrx_trace, partial)
 
    using transaction_trace = std::variant<transaction_trace_v0>;
