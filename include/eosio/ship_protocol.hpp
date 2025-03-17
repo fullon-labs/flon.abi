@@ -590,6 +590,9 @@ namespace eosio { namespace ship_protocol {
       uint32_t max_inline_action_size              = {};
       uint16_t max_inline_action_depth             = {};
       uint16_t max_authority_depth                 = {};
+      uint32_t gas_per_cpu_ms                      = {};
+      uint32_t gas_per_net_kb                      = {};
+      uint32_t gas_per_ram_kb                      = {};
    };
 
    EOSIO_REFLECT(chain_config_v0, max_block_net_usage, target_block_net_usage_pct, max_transaction_net_usage,
@@ -597,7 +600,7 @@ namespace eosio { namespace ship_protocol {
                  context_free_discount_net_usage_den, max_block_cpu_usage, target_block_cpu_usage_pct,
                  max_transaction_cpu_usage, min_transaction_cpu_usage, max_transaction_lifetime,
                  deferred_trx_expiration_window, max_transaction_delay, max_inline_action_size, max_inline_action_depth,
-                 max_authority_depth)
+                 max_authority_depth, gas_per_cpu_ms, gas_per_net_kb, gas_per_ram_kb)
 
    struct chain_config_v1 {
       uint64_t max_block_net_usage                 = {};
@@ -617,6 +620,9 @@ namespace eosio { namespace ship_protocol {
       uint32_t max_inline_action_size              = {};
       uint16_t max_inline_action_depth             = {};
       uint16_t max_authority_depth                 = {};
+      uint32_t gas_per_cpu_ms                      = {};
+      uint32_t gas_per_net_kb                      = {};
+      uint32_t gas_per_ram_kb                      = {};
       uint32_t max_action_return_value_size        = {};
    };
 
@@ -625,7 +631,7 @@ namespace eosio { namespace ship_protocol {
                context_free_discount_net_usage_den, max_block_cpu_usage, target_block_cpu_usage_pct,
                max_transaction_cpu_usage, min_transaction_cpu_usage, max_transaction_lifetime,
                deferred_trx_expiration_window, max_transaction_delay, max_inline_action_size, max_inline_action_depth,
-               max_authority_depth, max_action_return_value_size)
+               max_authority_depth, gas_per_cpu_ms, gas_per_net_kb, gas_per_ram_kb, max_action_return_value_size)
 
    using chain_config = std::variant<chain_config_v0, chain_config_v1>;
 
@@ -745,13 +751,15 @@ namespace eosio { namespace ship_protocol {
    using permission_link = std::variant<permission_link_v0>;
 
    struct resource_limits_v0 {
-      eosio::name owner      = {};
-      int64_t     net_weight = {};
-      int64_t     cpu_weight = {};
-      int64_t     ram_bytes  = {};
+      eosio::name owner          = {};
+      int64_t     net_weight     = {};
+      int64_t     cpu_weight     = {};
+      int64_t     ram_bytes      = {};
+      uint64_t    gas            = {};
+      bool        is_unlimited   = {};
    };
 
-   EOSIO_REFLECT(resource_limits_v0, owner, net_weight, cpu_weight, ram_bytes)
+   EOSIO_REFLECT(resource_limits_v0, owner, net_weight, cpu_weight, ram_bytes, gas, is_unlimited)
 
    using resource_limits = std::variant<resource_limits_v0>;
 
@@ -767,8 +775,8 @@ namespace eosio { namespace ship_protocol {
 
    struct resource_usage_v0 {
       eosio::name       owner     = {};
-      usage_accumulator net_usage = {};
-      usage_accumulator cpu_usage = {};
+      uint64_t          net_usage = {};
+      uint64_t          cpu_usage = {};
       uint64_t          ram_usage = {};
    };
 
@@ -818,10 +826,14 @@ namespace eosio { namespace ship_protocol {
       elastic_limit_parameters net_limit_parameters             = {};
       uint32_t                 account_cpu_usage_average_window = {};
       uint32_t                 account_net_usage_average_window = {};
+      uint32_t                 gas_per_cpu_ms                   = {};
+      uint32_t                 gas_per_net_kb                   = {};
+      uint32_t                 gas_per_ram_kb                   = {};
    };
 
    EOSIO_REFLECT(resource_limits_config_v0, cpu_limit_parameters, net_limit_parameters,
-                 account_cpu_usage_average_window, account_net_usage_average_window)
+                 account_cpu_usage_average_window, account_net_usage_average_window,
+                 gas_per_cpu_ms, gas_per_net_kb, gas_per_ram_kb)
 
    using resource_limits_config = std::variant<resource_limits_config_v0>;
 
