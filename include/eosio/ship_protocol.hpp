@@ -764,13 +764,12 @@ namespace eosio { namespace ship_protocol {
 
    struct resource_limits_v0 {
       eosio::name owner          = {};
-      int64_t     cpu_weight     = {};
       int64_t     ram_bytes      = {};
       uint64_t    gas            = {};
       bool        is_unlimited   = {};
    };
 
-   EOSIO_REFLECT(resource_limits_v0, owner, cpu_weight, ram_bytes, gas, is_unlimited)
+   EOSIO_REFLECT(resource_limits_v0, owner, ram_bytes, gas, is_unlimited)
 
    using resource_limits = std::variant<resource_limits_v0>;
 
