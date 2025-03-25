@@ -764,7 +764,6 @@ namespace eosio { namespace ship_protocol {
 
    struct resource_limits_v0 {
       eosio::name owner          = {};
-      int64_t     ram_bytes      = {};
       uint64_t    gas            = {};
       bool        is_unlimited   = {};
    };
