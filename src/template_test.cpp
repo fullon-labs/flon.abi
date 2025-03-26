@@ -89,7 +89,7 @@ void test(const T& value, eosio::abi& abi1, eosio::abi& abi2) {
 }
 
 char empty_abi[] = R"({
-    "version": "eosio::abi/1.0"
+    "version": "flon::abi/1.0"
 })";
 
 template<typename T>

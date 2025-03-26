@@ -36,7 +36,7 @@ const char testHexAbi[] = "0E656F73696F3A3A6162692F312E3100040273310001027831046
                           "02623107696E74385B5D240000000000010276310304696E7438027331027332";
 
 const char testAbi[] = R"({
-    "version": "eosio::abi/1.1",
+    "version": "flon::abi/1.1",
     "structs": [
         {
             "name": "s1",
@@ -134,7 +134,7 @@ const char testAbi[] = R"({
 })";
 
 const char transactionAbi[] = R"({
-    "version": "eosio::abi/1.0",
+    "version": "flon::abi/1.0",
     "types": [
         {
             "new_type_name": "account_name",
@@ -252,7 +252,7 @@ const char transactionAbi[] = R"({
 })";
 
 const char testKvTablesAbi[] = R"({
-    "version": "eosio::abi/1.2",
+    "version": "flon::abi/1.2",
     "types": [],
     "structs": [
         {
@@ -372,7 +372,7 @@ const char testKvTablesAbi[] = R"({
 })";
 
 const char packedTransactionAbi[] = R"({
-    "version": "eosio::abi/1.0",
+    "version": "flon::abi/1.0",
     "types": [
         {
             "new_type_name": "account_name",
@@ -658,16 +658,16 @@ void check_types() {
     check_error(context, "no data", [&] { return abieos_set_abi_hex(context, 8, ""); });
     check_error(context, "unsupported abi version", [&] { return abieos_set_abi_hex(context, 8, "00"); });
     check_error(context, "unsupported abi version",
-                [&] { return abieos_set_abi_hex(context, 8, string_to_hex("eosio::abi/9.0").c_str()); });
+                [&] { return abieos_set_abi_hex(context, 8, string_to_hex("flon::abi/9.0").c_str()); });
     check_error(context, "Stream overrun",
-                [&] { return abieos_set_abi_hex(context, 8, string_to_hex("eosio::abi/1.0").c_str()); });
+                [&] { return abieos_set_abi_hex(context, 8, string_to_hex("flon::abi/1.0").c_str()); });
     check_error(context, "Stream overrun",
-                [&] { return abieos_set_abi_hex(context, 8, string_to_hex("eosio::abi/1.1").c_str()); });
+                [&] { return abieos_set_abi_hex(context, 8, string_to_hex("flon::abi/1.1").c_str()); });
 
     check_error(context, "unsupported abi version",
-                [&] { return abieos_set_abi(context, 8, R"({"version":"eosio::abi/9.0"})"); });
-    abieos_set_abi(context, 8, R"({"version":"eosio::abi/1.0"})");
-    abieos_set_abi(context, 8, R"({"version":"eosio::abi/1.1"})");
+                [&] { return abieos_set_abi(context, 8, R"({"version":"flon::abi/9.0"})"); });
+    abieos_set_abi(context, 8, R"({"version":"flon::abi/1.0"})");
+    abieos_set_abi(context, 8, R"({"version":"flon::abi/1.1"})");
 
     check_type(context, 0, "bool", R"(true)");
     check_type(context, 0, "bool", R"(false)");
@@ -1013,16 +1013,16 @@ void check_types() {
 
     check_error(context, "abi has a type with a missing name", [&] {
         return abieos_set_abi( //
-            context, 0, R"({"version":"eosio::abi/1.1","types":[{"new_type_name":"","type":"int8"}]})");
+            context, 0, R"({"version":"flon::abi/1.1","types":[{"new_type_name":"","type":"int8"}]})");
     });
     check_error(context, "can't use extensions ($) within typedefs", [&] {
         return abieos_set_abi( //
-            context, 0, R"({"version":"eosio::abi/1.1","types":[{"new_type_name":"a","type":"int8$"}]})");
+            context, 0, R"({"version":"flon::abi/1.1","types":[{"new_type_name":"a","type":"int8$"}]})");
     });
     check_error(context, "abi redefines type \"a\"", [&] {
         return abieos_set_abi(
             context, 0,
-            R"({"version":"eosio::abi/1.1","types":[{"new_type_name":"a","type":"int8"},{"new_type_name":"a","type":"int8"}]})");
+            R"({"version":"flon::abi/1.1","types":[{"new_type_name":"a","type":"int8"},{"new_type_name":"a","type":"int8"}]})");
     });
 
     check_error(context, "expected object", [&] { return abieos_json_to_bin(context, testAbiName, "s4", "null"); });

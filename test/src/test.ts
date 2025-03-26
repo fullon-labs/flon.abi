@@ -32,7 +32,7 @@ const tokenHexApi =
     '36340e63757272656e63795f7374617473000000';
 
 const testAbi = `{
-        "version": "eosio::abi/1.0",
+        "version": "flon::abi/1.0",
         "structs": [
             {
                 "name": "s1",
@@ -234,9 +234,9 @@ function check_types() {
 
     check_throw('Error: missing abi_def.version (type=string)', () => eosjs_hex_abi_to_json(eosjs_json_abi_to_hex({})));
     check_throw('Error: Unsupported abi version', () => eosjs_hex_abi_to_json(eosjs_json_abi_to_hex({ version: '' })));
-    check_throw('Error: Unsupported abi version', () => eosjs_hex_abi_to_json(eosjs_json_abi_to_hex({ version: 'eosio::abi/9.0' })));
-    eosjs_hex_abi_to_json(eosjs_json_abi_to_hex({ version: 'eosio::abi/1.0' }));
-    eosjs_hex_abi_to_json(eosjs_json_abi_to_hex({ version: 'eosio::abi/1.1' }));
+    check_throw('Error: Unsupported abi version', () => eosjs_hex_abi_to_json(eosjs_json_abi_to_hex({ version: 'flon::abi/9.0' })));
+    eosjs_hex_abi_to_json(eosjs_json_abi_to_hex({ version: 'flon::abi/1.0' }));
+    eosjs_hex_abi_to_json(eosjs_json_abi_to_hex({ version: 'flon::abi/1.1' }));
 
     check_type(0, js2Types, 'bool', 'true');
     check_type(0, js2Types, 'bool', 'false');
