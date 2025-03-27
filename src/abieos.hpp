@@ -56,6 +56,8 @@ inline constexpr bool trace_bin_to_json = false;
 
 inline constexpr size_t max_stack_size = 128;
 
+static const std::string abi_version_prefix = "flon::abi/1.";
+
 // Pseudo objects never exist, except in serialized form
 struct pseudo_optional;
 struct pseudo_extension;
@@ -458,7 +460,7 @@ using extensions_type = std::vector<std::pair<uint16_t, bytes>>;
 using eosio::abi_def;
 
 ABIEOS_NODISCARD inline bool check_abi_version(const std::string& s, std::string& error) {
-    if (s.substr(0, 13) != "flon::abi/1.")
+    if (s.substr(0, abi_version_prefix.size()) != abi_version_prefix)
         return set_error(error, "unsupported abi version");
     return true;
 }
