@@ -70,6 +70,11 @@ namespace detail {
    }
 } // ns eosio::detail
 
+#define EOS_CHECK(pred, msg) {   \
+   if (!(pred))           \
+      eosio::check(pred, msg);   \
+}
+
 /**
  *  Assert if the predicate fails and use the supplied message.
  *

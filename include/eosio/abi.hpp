@@ -299,7 +299,8 @@ auto add_type(abi& a, T*) -> std::enable_if_t<reflection::has_for_each_field_v<T
 template <typename T>
 auto add_type(abi& a, T* t) -> std::enable_if_t<is_basic_abi_type<T>, abi_type*> {
    auto iter = a.abi_types.find(get_type_name(t));
-   check(iter != a.abi_types.end(), convert_abi_error(abi_error::unknown_type));
+   eosio::check(iter != a.abi_types.end(),
+      std::string(convert_abi_error(abi_error::unknown_type)) + " of " + get_type_name(t) );
    return &iter->second;
 }
 
