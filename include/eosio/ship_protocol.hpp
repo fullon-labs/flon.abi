@@ -231,6 +231,22 @@ namespace eosio { namespace ship_protocol {
    EOSIO_REFLECT(account_delta, account, delta)
    EOSIO_COMPARE(account_delta);
 
+   struct ram_gas_delta {
+      int64_t           ram_delta               = {};
+      int64_t           gas_delta               = {};
+   };
+   EOSIO_REFLECT(ram_gas_delta, ram_delta, gas_delta)
+
+   struct account_gas_trace_v0 {
+      eosio::name                      account                 = {};
+      uint64_t                         reserved_gas_before     = {};
+      uint64_t                         reserved_gas_after      = {};
+      uint64_t                         used_gas                = {};
+      uint64_t                         converted_gas           = {};
+      ship_protocol::ram_gas_delta     ram_gas_delta           = {};
+   };
+   using account_gas_trace = std::variant<account_gas_trace_v0>;
+
    struct action_trace_v0 {
       eosio::varuint32              action_ordinal         = {};
       eosio::varuint32              creator_action_ordinal = {};
@@ -308,7 +324,8 @@ namespace eosio { namespace ship_protocol {
       transaction_res_usage                  res_usage         = {};
       bool                                   scheduled         = {};
       std::vector<action_trace>              action_traces     = {};
-      std::optional<account_delta>           trx_ram_delta = {};
+      std::optional<account_delta>           trx_ram_delta     = {};
+      account_gas_trace                      gas_traces        = {};
       std::optional<std::string>             except            = {};
       std::optional<uint64_t>                error_code        = {};
       // semantically, this should be std::optional<transaction_trace>;
