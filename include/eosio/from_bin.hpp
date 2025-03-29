@@ -202,7 +202,7 @@ void variant_from_bin(std::variant<Ts...>& v, uint32_t i, S& stream) {
          variant_from_bin<I + 1>(v, i, stream);
       }
    } else {
-      check( false, convert_stream_error(stream_error::bad_variant_index) );
+      EOS_CHECK(false, std::string(eosio::convert_stream_error(eosio::stream_error::bad_variant_index)) + " " + std::to_string(I) + " of type " + typeid(std::variant<Ts...>).name());
    }
 }
 

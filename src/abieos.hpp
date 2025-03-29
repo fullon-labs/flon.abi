@@ -988,7 +988,7 @@ inline void bin_to_json(pseudo_variant*, bin_to_json_state& state, bool allow_ex
         uint32_t index;
         varuint32_from_bin(index, state.bin);
         const std::vector<eosio::abi_field>& fields = *stack_entry.type->as_variant();
-        eosio::check(index < fields.size(), eosio::convert_stream_error(eosio::stream_error::bad_variant_index));
+        EOS_CHECK(index < fields.size(), std::string(eosio::convert_stream_error(eosio::stream_error::bad_variant_index)) + " of type " + type->name);
         auto& f = fields[index];
         to_json(f.name, state.writer);
         state.writer.write(',');

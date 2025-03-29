@@ -245,6 +245,8 @@ namespace eosio { namespace ship_protocol {
       uint64_t                         converted_gas           = {};
       ship_protocol::ram_gas_delta     ram_gas_delta           = {};
    };
+   EOSIO_REFLECT(account_gas_trace_v0, account, reserved_gas_before, reserved_gas_after, used_gas, converted_gas, ram_gas_delta)
+
    using account_gas_trace = std::variant<account_gas_trace_v0>;
 
    struct action_trace_v0 {
@@ -325,7 +327,7 @@ namespace eosio { namespace ship_protocol {
       bool                                   scheduled         = {};
       std::vector<action_trace>              action_traces     = {};
       std::optional<account_delta>           trx_ram_delta     = {};
-      account_gas_trace                      gas_traces        = {};
+      std::vector<account_gas_trace>         gas_traces        = {};
       std::optional<std::string>             except            = {};
       std::optional<uint64_t>                error_code        = {};
       // semantically, this should be std::optional<transaction_trace>;
@@ -337,7 +339,7 @@ namespace eosio { namespace ship_protocol {
    };
 
    EOSIO_REFLECT(transaction_trace_v0, id, status, cpu_usage_us, net_usage_words, elapsed, res_usage, scheduled,
-                 action_traces, trx_ram_delta, except, error_code, failed_dtrx_trace, partial)
+                 action_traces, trx_ram_delta, gas_traces, except, error_code, failed_dtrx_trace, partial)
 
    using transaction_trace = std::variant<transaction_trace_v0>;
 
