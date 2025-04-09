@@ -815,15 +815,15 @@ namespace eosio { namespace ship_protocol {
    struct resource_limits_state_v0 {
       usage_accumulator average_block_net_usage = {};
       usage_accumulator average_block_cpu_usage = {};
-      uint64_t          total_net_weight        = {};
-      uint64_t          total_cpu_weight        = {};
-      uint64_t          total_ram_bytes         = {};
+      uint64_t          total_net_usage        = {};
+      uint64_t          total_cpu_usage        = {};
+      uint64_t          total_ram_usage         = {};
       uint64_t          virtual_net_limit       = {};
       uint64_t          virtual_cpu_limit       = {};
    };
 
-   EOSIO_REFLECT(resource_limits_state_v0, average_block_net_usage, average_block_cpu_usage, total_net_weight,
-                 total_cpu_weight, total_ram_bytes, virtual_net_limit, virtual_cpu_limit)
+   EOSIO_REFLECT(resource_limits_state_v0, average_block_net_usage, average_block_cpu_usage, total_net_usage,
+                 total_cpu_usage, total_ram_usage, virtual_net_limit, virtual_cpu_limit)
 
    using resource_limits_state = std::variant<resource_limits_state_v0>;
 
